@@ -1,0 +1,5 @@
+T pop() {
+    // TODO: Remove an element on top of the stack
+    if (this->list.empty()) throw std::out_of_range("Stack Underflow");
+    return this->list.removeAt(0);
+}

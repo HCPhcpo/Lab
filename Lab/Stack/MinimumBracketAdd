@@ -1,0 +1,7 @@
+int mininumBracketAdd(string s) {
+    if(s == "") return 0;
+    count(s);
+    int i = k.size();
+    // clear();
+    return i;
+}

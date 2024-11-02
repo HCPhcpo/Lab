@@ -1,0 +1,22 @@
+long long nthNiceNumber(int n) {
+    // Hàng đợi để chứa các số đẹp
+    queue<long long> q;
+
+    // Bắt đầu với các số đẹp cơ bản
+    q.push(2);
+    q.push(5);
+
+    long long niceNumber = 0;
+
+    // Lặp n lần để lấy số đẹp thứ N
+    for (int i = 0; i < n; i++) {
+        niceNumber = q.front();
+        q.pop();
+
+        // Sinh các số đẹp tiếp theo
+        q.push(niceNumber * 10 + 2);
+        q.push(niceNumber * 10 + 5);
+    }
+
+    return niceNumber;
+}

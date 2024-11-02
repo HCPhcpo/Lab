@@ -1,0 +1,4 @@
+bool empty() {
+    // TODO: Determine if the stack is empty
+    return this->list.empty();
+}

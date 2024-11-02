@@ -1,0 +1,31 @@
+bool isBipartite(vector<vector<int>> graph) {
+    int n = graph.size();
+    vector<int> color(n, -1); // Mảng màu, -1 có nghĩa là chưa được gán màu
+
+    for (int start = 0; start < n; ++start) {
+        // Nếu đỉnh chưa được gán màu, bắt đầu BFS từ đỉnh này
+        if (color[start] == -1) {
+            queue<int> q;
+            q.push(start);
+            color[start] = 0; // Gán màu 0 cho đỉnh bắt đầu
+
+            while (!q.empty()) {
+                int current = q.front();
+                q.pop();
+
+                // Duyệt qua các đỉnh kề
+                for (int neighbor : graph[current]) {
+                    if (color[neighbor] == -1) {
+                        // Nếu đỉnh kề chưa được gán màu, gán màu đối lập
+                        color[neighbor] = 1 - color[current];
+                        q.push(neighbor);
+                    } else if (color[neighbor] == color[current]) {
+                        // Nếu đỉnh kề đã có cùng màu với đỉnh hiện tại, đồ thị không phải là bipartite
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true; // Nếu không phát hiện trường hợp nào vi phạm, đồ thị là bipartite
+}

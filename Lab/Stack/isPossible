@@ -1,0 +1,7 @@
+bool isPossible(const std::vector<int>& piles, int k, int r) {
+    int boxesUsed = 0;
+    for (int pile : piles) {
+        boxesUsed += (pile + r - 1) / r;
+    }
+    return boxesUsed <= k;
+}

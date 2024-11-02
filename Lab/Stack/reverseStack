@@ -1,0 +1,15 @@
+void reverseStack(stack<int>& st) {
+    queue<int> q;
+
+    // Chuyển tất cả các phần tử từ stack vào queue
+    while (!st.empty()) {
+        q.push(st.top());
+        st.pop();
+    }
+
+    // Lấy tất cả các phần tử từ queue và thêm vào stack
+    while (!q.empty()) {
+        st.push(q.front());
+        q.pop();
+    }
+}

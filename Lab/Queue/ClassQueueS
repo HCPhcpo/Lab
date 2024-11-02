@@ -1,0 +1,113 @@
+#include <iostream>
+#include <stack>
+#include <stdexcept>
+#include <sstream>
+#include <vector>  // Để sử dụng vector
+
+using namespace std;
+
+class QueueS {
+private:
+    stack<int> inputStack;   // Stack dùng để thêm phần tử
+    stack<int> outputStack;  // Stack dùng để lấy phần tử
+
+    // Hàm phụ trợ để chuyển phần tử từ inputStack sang outputStack
+    void moveElementsToOutput() {
+        while (!inputStack.empty()) {
+            outputStack.push(inputStack.top());
+            inputStack.pop();
+        }
+    }
+
+public:
+    // Thêm một phần tử vào cuối queue
+    void enqueue(int value) {
+        inputStack.push(value);
+    }
+
+    // Loại bỏ phần tử đầu tiên và trả về giá trị của nó
+    int dequeue() {
+        if (outputStack.empty()) {
+            if (inputStack.empty()) {
+                throw out_of_range("Empty queue");
+            }
+            moveElementsToOutput();
+        }
+        int value = outputStack.top();
+        outputStack.pop();
+        return value;
+    }
+
+    // Trả về giá trị của phần tử đầu tiên trong queue
+    int front() {
+        if (outputStack.empty()) {
+            if (inputStack.empty()) {
+                throw out_of_range("Empty queue");
+            }
+            moveElementsToOutput();
+        }
+        return outputStack.top();
+    }
+
+    // Trả về giá trị của phần tử cuối cùng trong queue
+ int rear() {
+    if (inputStack.empty() && outputStack.empty()) {
+        throw out_of_range("Empty queue");
+    }
+
+    // Nếu inputStack không rỗng, phần tử trên cùng là phần tử cuối cùng trong queue
+    if (!inputStack.empty()) {
+        return inputStack.top();
+    }
+
+    // Nếu inputStack rỗng, cần lấy phần tử đáy của outputStack
+    stack<int> tempStack = outputStack;
+    while (tempStack.size() > 1) {
+        tempStack.pop();  // Loại bỏ cho đến khi còn lại phần tử đáy
+    }
+    return tempStack.top();  // Phần tử cuối cùng trong queue
+}
+
+
+    // Chuyển queue thành chuỗi ký tự
+   // Chuyển queue thành chuỗi ký tự
+// Chuyển queue thành chuỗi ký tự
+// Chuyển queue thành chuỗi ký tự
+string toString() {
+    stack<int> tempInputStack = inputStack;  // Sao chép inputStack
+    stack<int> tempOutputStack = outputStack;  // Sao chép outputStack
+    vector<int> inputItems;  // Lưu phần tử từ inputStack
+
+    // Đưa các phần tử từ inputStack vào vector
+    while (!tempInputStack.empty()) {
+        inputItems.push_back(tempInputStack.top());
+        tempInputStack.pop();
+    }
+
+    stringstream ss;
+    ss << "FRONT";
+
+    // Kiểm tra xem queue có rỗng hay không
+    if (tempOutputStack.empty() && inputItems.empty()) {
+        ss << "||REAR";  // Định dạng khi queue rỗng
+    } else {
+        ss << "|";  // Bỏ qua khoảng trắng ngay sau "FRONT|"
+
+        // In phần tử từ outputStack
+        while (!tempOutputStack.empty()) {
+ ss << " " << tempOutputStack.top(); // Thêm khoảng trắng trước phần tử
+            tempOutputStack.pop();
+        }
+
+        // In phần tử từ inputStack (theo thứ tự ban đầu)
+        for (int i = inputItems.size() - 1; i >= 0; --i) {
+            ss << " " << inputItems[i]; // Thêm khoảng trắng trước phần tử
+        }
+
+        ss << "|REAR";  // Kết thúc chuỗi
+    }
+
+    return ss.str();
+}
+
+};

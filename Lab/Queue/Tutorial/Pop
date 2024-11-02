@@ -1,0 +1,5 @@
+T pop() {
+    // TODO: Remove an element in the head of the queue
+    if (this->empty()) throw std::out_of_range("Empty Queue");
+    return this->list.removeAt(0);
+}

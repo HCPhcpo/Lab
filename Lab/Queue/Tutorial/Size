@@ -1,0 +1,4 @@
+int size() {
+    // TODO: Get the size of the queue
+    return this->list.size();
+}

@@ -1,0 +1,29 @@
+int sumOfMinSubarray(vector<int>& nums) {
+    // STUDENT ANSWER
+    const int MOD = 10000;
+    int n = nums.size();
+    long long result = 0;  // We use long long to avoid integer overflow
+
+    stack<int> s;  // Stack to keep track of indices
+
+    for (int i = 0; i < n; ++i) {
+        // Pop elements from the stack while they are greater than the current element
+        while (!s.empty() && nums[i] < nums[s.top()]) {
+            int top = s.top();
+            s.pop();
+            int left = (s.empty() ? -1 : s.top());
+            result = (result + (long long)nums[top] * (i - top) * (top - left)) % MOD;
+        }
+        s.push(i);
+    }
+
+    // Pop remaining elements in the stack
+    while (!s.empty()) {
+        int top = s.top();
+        s.pop();
+        int left = (s.empty() ? -1 : s.top());
+        result = (result + (long long)nums[top] * (n - top) * (top - left)) % MOD;
+    }
+
+    return result;
+}

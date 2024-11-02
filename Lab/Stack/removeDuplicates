@@ -1,0 +1,23 @@
+string removeDuplicates(string S) {
+    stack<char> chars;
+    unsigned int size = S.size();
+    for (unsigned int i=0; i<size; i++) {
+        bool flag = false;
+        while (!chars.empty() && S[i] == chars.top()) {
+            chars.pop();
+            flag = true;
+        }
+        if (!flag) {
+            chars.push(S[i]);
+        }
+    }
+
+    string ans = "";
+
+    while (!chars.empty()) {
+        ans = chars.top() + ans;
+        chars.pop();
+    }
+
+    return ans;
+}

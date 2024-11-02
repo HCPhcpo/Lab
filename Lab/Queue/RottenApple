@@ -1,0 +1,51 @@
+int rows = grid.size();
+    int cols = grid[0].size();
+    queue<pair<int, int>> rottenQueue;
+    int freshCount = 0; // Đếm số quả táo tươi
+    int seconds = 0; // Thời gian cần thiết
+
+    // Thêm các quả táo hỏng vào hàng đợi và đếm số quả táo tươi
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (grid[i][j] == 2) {
+                rottenQueue.push({i, j}); // Thêm vào hàng đợi
+            } else if (grid[i][j] == 1) {
+                freshCount++; // Đếm quả táo tươi
+            }
+        }
+    }
+
+    // Nếu không có quả táo tươi thì trả về 0
+    if (freshCount == 0) return 0;
+
+    // Các hướng để kiểm tra ô xung quanh
+    vector<pair<int, int>> directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    // Bắt đầu BFS
+    while (!rottenQueue.empty()) {
+        int size = rottenQueue.size();
+        for (int i = 0; i < size; i++) {
+            // Thay đổi cách lấy x và y từ pair
+            int x = rottenQueue.front().first;
+            int y = rottenQueue.front().second;
+            rottenQueue.pop();
+
+            // Kiểm tra các ô xung quanh
+            for (const auto& direction : directions) {
+                int newX = x + direction.first;
+int newY = y + direction.second;
+
+                // Kiểm tra xem ô mới có nằm trong giới hạn không và có quả táo tươi không
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && grid[newX][newY] == 1) {
+                    grid[newX][newY] = 2; // Biến quả táo tươi thành hỏng
+                    freshCount--; // Giảm số lượng quả táo tươi
+                    rottenQueue.push({newX, newY}); // Thêm vào hàng đợi
+                }
+            }
+        }
+        seconds++; // Tăng thời gian sau mỗi lượt BFS
+    }
+
+    // Nếu vẫn còn quả táo tươi, trả về -1
+    return freshCount == 0 ? seconds - 1 : -1;
+}

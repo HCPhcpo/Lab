@@ -1,0 +1,4 @@
+int size() {
+    // TODO: Get the size of the stack
+    return this->list.size();
+}

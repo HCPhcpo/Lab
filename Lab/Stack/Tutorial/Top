@@ -1,0 +1,5 @@
+T top() {
+    // TODO: Get value of the element on top of the stack
+    if (this->list.empty()) throw std::out_of_range("Stack Underflow");
+    return this->list.get(0);
+}

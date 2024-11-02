@@ -1,0 +1,4 @@
+bool empty() {
+    // TODO: Determine if the queue is empty
+    return this->list.empty();
+}

@@ -1,0 +1,35 @@
+string deleteDuplicate(string s, int k) {
+    unsigned int size = s.size();
+    
+    if (k == 1) return "";
+    
+    stack<pair<char, unsigned int>> st;
+    for (unsigned int i=0; i<size; i++) {
+        if (!st.empty() && st.top().first == s[i]) {
+            int t = st.top().second + 1;
+            st.pop();
+            if (t < k) {
+                pair<char, unsigned int> p = {s[i], t};
+                st.push(p);
+            }
+        }
+        else {
+            pair<char, unsigned int> p = {s[i], 1};
+            st.push(p);
+        }
+    }
+
+    string ans = "";
+
+    while (!st.empty()) {
+        pair<char, unsigned int> top = st.top();
+        st.pop();
+        char c = top.first;
+
+        for (unsigned int i=0; i<top.second; i++) {
+            ans = c + ans;
+        }
+    }
+
+    return ans;
+}

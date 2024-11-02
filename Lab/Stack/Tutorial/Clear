@@ -1,0 +1,4 @@
+void clear() {
+    // TODO: Clear all elements of the stack
+    this->list.clear();
+}

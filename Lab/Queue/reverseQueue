@@ -1,0 +1,15 @@
+void reverseQueue(queue<int> &q) {
+    stack<int> s;
+    
+    // Pop tất cả các phần tử từ queue vào stack
+    while (!q.empty()) {
+        s.push(q.front());
+        q.pop();
+    }
+    
+    // Pop tất cả các phần tử từ stack và đẩy vào lại queue
+    while (!s.empty()) {
+        q.push(s.top());
+        s.pop();
+    }
+}

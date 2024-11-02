@@ -1,0 +1,4 @@
+void push(T item) {
+    // TODO: Push new element into the end of the queue
+    this->list.add(item);
+}

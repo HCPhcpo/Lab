@@ -1,0 +1,19 @@
+bool tripleIndexSLM(vector<int>& nums) {
+    if (nums.size() < 3) return false;
+
+    stack<int> st;
+    int rE = -1e7;
+
+    for (int e : nums) {
+        if (e < rE) return true;
+
+        while (!st.empty() && e > st.top()) {
+            rE = st.top();
+            st.pop();
+        }
+
+        st.push(e);
+    }
+
+    return false;
+}

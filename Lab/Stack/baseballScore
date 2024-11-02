@@ -1,0 +1,35 @@
+int baseballScore(string ops) {
+    stack<int> st;
+
+    for (char c : ops) {
+        if (isdigit(c)) {
+            st.push(c - 48);
+        }
+        else {
+            switch (c) {
+                case 'C':
+                    st.pop();
+                    break;
+                case 'D':
+                    st.push(st.top() * 2);
+                    break;
+                case '+':
+                    int tmp = st.top();
+                    st.pop();
+                    int sum = tmp + st.top();
+                    st.push(tmp);
+                    st.push(sum);
+                    break;
+            }
+        }
+    }
+
+    int ans = 0;
+
+    while (!st.empty()) {
+        ans += st.top();
+        st.pop();
+    }
+
+    return ans;
+}

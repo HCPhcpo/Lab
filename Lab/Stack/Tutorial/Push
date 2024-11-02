@@ -1,0 +1,4 @@
+void push(T item) {
+    // TODO: Push new element into the top of the stack
+    this->list.add(0, item);
+}
