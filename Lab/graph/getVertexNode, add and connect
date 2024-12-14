@@ -1,0 +1,31 @@
+template<class T>
+typename DGraph<T>::VertexNode* DGraph<T>::getVertexNode(T vertex) {
+    VertexNode* c = this->nodeList;
+    while (c != nullptr) {
+        if (c->vertex == vertex) return c;
+        c = c->next;
+    }
+    return nullptr;
+}
+
+template<class T>
+void DGraph<T>::add(T vertex) {
+
+    VertexNode* n = new VertexNode(vertex);
+    if (this->nodeList == nullptr) this->nodeList = n;
+    else {
+        VertexNode* c = this->nodeList;
+        while (c->next != nullptr) c = c->next;
+        c->next = n;
+    }
+    this->countVertex++;
+}
+
+template <class T>
+void DGraph<T>::connect(T from, T to, float weight) {
+
+    VertexNode* f = getVertexNode(from);
+    VertexNode* t = getVertexNode(to);
+    if (f == nullptr || t == nullptr) throw VertexNotFoundException("Vertex doesn't exist!");
+    if (f->connectTo(t, weight)) this->countEdge++;
+}

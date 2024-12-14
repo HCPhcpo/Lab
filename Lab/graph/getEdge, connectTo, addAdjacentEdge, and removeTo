@@ -1,0 +1,56 @@
+template<class T>
+typename DGraph<T>::Edge* DGraph<T>::VertexNode::getEdge(VertexNode* toNode) {
+    Edge* current = this->adList;
+    while (current != nullptr) {
+        if (current->toNode == toNode) {
+            return current; 
+        }
+        current = current->next;
+    }
+    return nullptr; 
+}
+
+template<class T>
+void DGraph<T>::VertexNode::addAdjacentEdge(Edge* newEdge) {
+    if (newEdge) {
+        newEdge->next = this->adList; 
+        this->adList = newEdge; 
+    }
+}
+
+template<class T>
+bool DGraph<T>::VertexNode::connectTo(VertexNode* toNode, float weight) {
+    Edge* existingEdge = this->getEdge(toNode); 
+
+    if (existingEdge == nullptr) {
+        Edge* newEdge = new Edge(this, toNode, weight);
+        this->addAdjacentEdge(newEdge);
+        return true;  
+    } else {
+        existingEdge->weight = weight;
+        return false; 
+    }
+}
+
+template<class T>
+bool DGraph<T>::VertexNode::removeTo(VertexNode *toNode) {
+    if (this->adList && this->adList->toNode == toNode) {
+        Edge* edgeToRemove = this->adList;
+        this->adList = this->adList->next; 
+        delete edgeToRemove; 
+        return true; 
+    }
+
+    Edge* current = this->adList;
+    while (current != nullptr && current->next != nullptr) {
+        if (current->next->toNode == toNode) {
+            Edge* edgeToRemove = current->next;
+            current->next = current->next->next;
+            delete edgeToRemove; 
+            return true; 
+        }
+        current = current->next; 
+    }
+
+    return false; 
+}

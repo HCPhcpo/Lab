@@ -1,0 +1,33 @@
+template <class T>
+bool DGraph<T>::removeEdge(T from, T to) {
+    
+    VertexNode* f = getVertexNode(from);
+    VertexNode* t = getVertexNode(to);
+    if (f == nullptr || t == nullptr) throw VertexNotFoundException("Vertex doesn't exist!");
+    if (f->removeTo(t)) {
+        this->countEdge--;
+        return true;
+    }
+    return false;
+}
+
+template <class T>
+void DGraph<T>::removeVertex(T removeVertex) {
+
+VertexNode* r = getVertexNode(removeVertex);
+if (r == nullptr) throw VertexNotFoundException("Vertex doesn't exist!");
+VertexNode* c = this->nodeList;
+while (c != nullptr) {
+    if (c->removeTo(r)) countEdge--;
+    if (r->removeTo(c)) countEdge--;
+    c = c->next;
+}
+if (nodeList == r) nodeList = r->next;
+else {
+    VertexNode* p = nodeList;
+    while (p->next != r) p = p->next;
+    p->next = r->next;
+}
+delete r;
+countVertex--;
+}
